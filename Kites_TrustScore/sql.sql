@@ -1,0 +1,36 @@
+CREATE TABLE IF NOT EXISTS projectla_players (
+  identifier VARCHAR(64) NOT NULL PRIMARY KEY,
+  trustscore INT NOT NULL DEFAULT 70,
+  playtime_seconds INT NOT NULL DEFAULT 0,
+  first_seen TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  last_seen TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS projectla_bans (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  identifier VARCHAR(64) NOT NULL,
+  reason VARCHAR(255) NOT NULL,
+  banned_by VARCHAR(64) NOT NULL,
+  banned_by_name VARCHAR(64) NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  expires_at TIMESTAMP NULL DEFAULT NULL,
+  active TINYINT(1) NOT NULL DEFAULT 1,
+  INDEX(identifier),
+  INDEX(active),
+  INDEX(expires_at)
+);
+
+CREATE TABLE IF NOT EXISTS projectla_staff_logs (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  action VARCHAR(32) NOT NULL,
+  staff_identifier VARCHAR(64) NOT NULL,
+  staff_name VARCHAR(64) NOT NULL,
+  target_identifier VARCHAR(64) NULL,
+  target_name VARCHAR(64) NULL,
+  reason VARCHAR(255) NULL,
+  meta TEXT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX(action),
+  INDEX(staff_identifier),
+  INDEX(target_identifier)
+);
